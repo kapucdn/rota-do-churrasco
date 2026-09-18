@@ -9,6 +9,8 @@
 //   SUPABASE_URL            -- a mesma URL que voce colocou em config.js
 //   SUPABASE_SERVICE_ROLE_KEY -- Project Settings > API > "service_role" no Supabase
 
+const BUCKET_FOTOS = "fotos-pratos";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ erro: "Metodo nao permitido." });
@@ -70,6 +72,28 @@ export default async function handler(req, res) {
       });
       if (!resposta.ok) throw new Error(await resposta.text());
       return res.status(200).json({ ok: true });
+    }
+
+    if (acao === "upload") {
+      const { nome_arquivo, conteudo_base64, tipo } = dados || {};
+      if (!nome_arquivo || !conteudo_base64) {
+        return res.status(400).json({ erro: "Arquivo invalido." });
+      }
+      const buffer = Buffer.from(conteudo_base64, "base64");
+      const caminho = `pratos/${nome_arquivo}`;
+      const resposta = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET_FOTOS}/${caminho}`, {
+        method: "POST",
+        headers: {
+          apikey: SERVICE_KEY,
+          Authorization: `Bearer ${SERVICE_KEY}`,
+          "Content-Type": tipo || "image/jpeg",
+          "x-upsert": "true",
+        },
+        body: buffer,
+      });
+      if (!resposta.ok) throw new Error(await resposta.text());
+      const urlPublica = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_FOTOS}/${caminho}`;
+      return res.status(200).json({ ok: true, url: urlPublica });
     }
 
     return res.status(400).json({ erro: "Acao desconhecida." });

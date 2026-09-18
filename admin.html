@@ -150,8 +150,11 @@
         </div>
       </div>
 
-      <label>URL da foto (opcional)</label>
-      <input type="text" id="prato-imagem" placeholder="https://...">
+      <label>Foto do prato</label>
+      <input type="file" id="prato-imagem-arquivo" accept="image/*" onchange="enviarFoto()">
+      <div class="status" id="status-foto"></div>
+      <img id="preview-imagem" style="display:none;max-width:160px;border-radius:6px;margin-top:8px;">
+      <input type="hidden" id="prato-imagem">
 
       <div class="botoes">
         <button type="submit" id="botao-salvar">Adicionar prato</button>
@@ -233,6 +236,16 @@ function editarPrato(prato) {
   document.getElementById("prato-preco").value = prato.preco;
   document.getElementById("prato-ordem").value = prato.ordem ?? 1;
   document.getElementById("prato-imagem").value = prato.imagem_url || "";
+
+  const preview = document.getElementById("preview-imagem");
+  if (prato.imagem_url) {
+    preview.src = prato.imagem_url;
+    preview.style.display = "block";
+  } else {
+    preview.style.display = "none";
+  }
+  document.getElementById("status-foto").textContent = "";
+
   document.getElementById("botao-salvar").textContent = "Salvar alterações";
   document.getElementById("botao-cancelar").style.display = "inline-block";
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -241,6 +254,9 @@ function editarPrato(prato) {
 function cancelarEdicao() {
   document.getElementById("form-prato").reset();
   document.getElementById("prato-id").value = "";
+  document.getElementById("prato-imagem").value = "";
+  document.getElementById("preview-imagem").style.display = "none";
+  document.getElementById("status-foto").textContent = "";
   document.getElementById("botao-salvar").textContent = "Adicionar prato";
   document.getElementById("botao-cancelar").style.display = "none";
 }
@@ -288,6 +304,53 @@ function escapeHtml(texto) {
   const div = document.createElement("div");
   div.textContent = texto ?? "";
   return div.innerHTML;
+}
+
+// ---------- UPLOAD DE FOTO (direto do PC, sem precisar de URL) ----------
+function redimensionarImagem(arquivo, maxLargura, qualidade) {
+  return new Promise((resolve, reject) => {
+    const leitor = new FileReader();
+    leitor.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let largura = img.width;
+        let altura = img.height;
+        if (largura > maxLargura) {
+          altura = Math.round(altura * (maxLargura / largura));
+          largura = maxLargura;
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = largura;
+        canvas.height = altura;
+        canvas.getContext("2d").drawImage(img, 0, 0, largura, altura);
+        resolve(canvas.toDataURL("image/jpeg", qualidade));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    leitor.onerror = reject;
+    leitor.readAsDataURL(arquivo);
+  });
+}
+
+async function enviarFoto() {
+  const arquivo = document.getElementById("prato-imagem-arquivo").files[0];
+  if (!arquivo) return;
+  const statusFoto = document.getElementById("status-foto");
+  statusFoto.textContent = "Enviando foto…";
+  try {
+    const dataUrl = await redimensionarImagem(arquivo, 1200, 0.8);
+    const base64 = dataUrl.split(",")[1];
+    const nomeArquivo = Date.now() + "-" + arquivo.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
+    const resultado = await chamarApi("upload", { nome_arquivo: nomeArquivo, conteudo_base64: base64, tipo: "image/jpeg" });
+    document.getElementById("prato-imagem").value = resultado.url;
+    const preview = document.getElementById("preview-imagem");
+    preview.src = resultado.url;
+    preview.style.display = "block";
+    statusFoto.textContent = "Foto enviada!";
+  } catch (erro) {
+    statusFoto.textContent = "Erro ao enviar foto: " + erro.message;
+  }
 }
 
 if (SENHA_ATUAL) carregarPratos(false);
