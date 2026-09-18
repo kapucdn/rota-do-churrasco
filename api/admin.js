@@ -15,13 +15,10 @@ export default async function handler(req, res) {
   }
 
   const { senha, acao, dados } = req.body || {};
-  if (senha !== "Senha@rota") {
+
+  if (!process.env.ADMIN_PASSWORD || senha !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ erro: "Senha incorreta." });
   }
-
-  // if (!process.env.ADMIN_PASSWORD || senha !== process.env.ADMIN_PASSWORD) {
-  //   return res.status(401).json({ erro: "Senha incorreta." });
-  // }
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
