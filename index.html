@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota do Churrasco — Cardápio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍺</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --carvao: #221510;
+    --carvao-claro: #33231a;
+    --brasa: #E8590C;
+    --brasa-escura: #B8430A;
+    --dourado: #F4B93F;
+    --papel: #FBF3E7;
+    --papel-escuro: #E8DCC8;
+    --texto-escuro: #2B1B12;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--carvao);
+    color: var(--papel);
+    font-family: "Work Sans", sans-serif;
+    line-height: 1.5;
+  }
+
+  .marca-fogo {
+    font-family: "Fraunces", serif;
+    font-optical-sizing: auto;
+  }
+
+  /* -------- HERO -------- */
+  .hero {
+    position: relative;
+    padding: 64px 24px 56px;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--carvao-claro), var(--carvao) 70%);
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0 38px, rgba(232,89,12,0.06) 38px 40px);
+    pointer-events: none;
+  }
+
+  .hero-emoji { font-size: 2.6rem; margin-bottom: 4px; }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    color: var(--dourado);
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+
+  .hero p.tagline {
+    margin-top: 10px;
+    font-size: 1.05rem;
+    color: var(--papel-escuro);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-info {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--papel-escuro);
+  }
+
+  .hero-info a { color: var(--dourado); text-decoration: none; }
+  .hero-info a:hover { text-decoration: underline; }
+
+  /* -------- DIVISOR DE FUMACA -------- */
+  .divisor {
+    height: 26px;
+    background: var(--papel);
+  }
+  .divisor svg { display: block; width: 100%; height: 26px; }
+
+  /* -------- CARDAPIO -------- */
+  .cardapio {
+    background: var(--papel);
+    color: var(--texto-escuro);
+    padding: 12px 20px 80px;
+  }
+
+  .categoria {
+    max-width: 620px;
+    margin: 0 auto;
+    padding-top: 44px;
+  }
+
+  .categoria h2 {
+    font-family: "Fraunces", serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--brasa-escura);
+    border-bottom: 2px solid var(--papel-escuro);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--papel-escuro);
+  }
+  .item:last-child { border-bottom: none; }
+
+  .item-nome-desc { flex: 1; min-width: 0; }
+
+  .item-nome {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .item-desc {
+    font-size: 0.88rem;
+    color: #6b5a48;
+    margin-top: 2px;
+  }
+
+  .item-preco {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--brasa-escura);
+    white-space: nowrap;
+  }
+
+  .vazio, .erro {
+    text-align: center;
+    color: #6b5a48;
+    padding: 40px 0;
+    font-size: 0.95rem;
+  }
+
+  footer {
+    background: var(--carvao);
+    color: var(--papel-escuro);
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.82rem;
+  }
+  footer a { color: var(--dourado); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-emoji">🍺</div>
+  <h1 class="marca-fogo">Rota do Churrasco</h1>
+  <p class="tagline">O sabor que reúne a galera. Petiscos na brasa, chope gelado e boa música pra fechar o dia.</p>
+  <div class="hero-info">
+    <span>📍 Guará, Brasília-DF</span>
+    <a href="https://www.instagram.com/rota_dochurrasco/" target="_blank" rel="noopener">📲 @rota_dochurrasco</a>
+  </div>
+</header>
+
+<div class="divisor">
+  <svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M0 20 L0 10 Q 12.5 0 25 10 T 50 10 T 75 10 T 100 10 T 125 10 T 150 10 T 175 10 T 200 10 L200 20 Z" fill="#221510"/></svg>
+</div>
+
+<main class="cardapio" id="cardapio">
+  <div class="vazio">Carregando cardápio…</div>
+</main>
+
+<footer>
+  Cardápio digital — <a href="admin.html">área administrativa</a>
+</footer>
+
+<script src="config.js"></script>
+<script>
+async function carregarCardapio() {
+  const container = document.getElementById("cardapio");
+  try {
+    const resposta = await fetch(
+      `${SUPABASE_URL}/rest/v1/pratos?select=*&ativo=eq.true&order=categoria.asc,ordem.asc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    if (!resposta.ok) throw new Error(`Erro ${resposta.status}`);
+    const pratos = await resposta.json();
+
+    if (!pratos.length) {
+      container.innerHTML = '<div class="vazio">Cardápio em preparação — volte em breve!</div>';
+      return;
+    }
+
+    const categorias = {};
+    for (const prato of pratos) {
+      (categorias[prato.categoria] ||= []).push(prato);
+    }
+
+    container.innerHTML = Object.entries(categorias).map(([categoria, itens]) => `
+      <section class="categoria">
+        <h2 class="marca-fogo">${escapeHtml(categoria)}</h2>
+        ${itens.map(item => `
+          <div class="item">
+            <div class="item-nome-desc">
+              <div class="item-nome">${escapeHtml(item.nome)}</div>
+              ${item.descricao ? `<div class="item-desc">${escapeHtml(item.descricao)}</div>` : ""}
+            </div>
+            <div class="item-preco">R$ ${Number(item.preco).toFixed(2).replace(".", ",")}</div>
+          </div>
+        `).join("")}
+      </section>
+    `).join("");
+  } catch (erro) {
+    console.error(erro);
+    container.innerHTML = '<div class="erro">Não consegui carregar o cardápio agora. Verifique a configuração do Supabase em config.js.</div>';
+  }
+}
+
+function escapeHtml(texto) {
+  const div = document.createElement("div");
+  div.textContent = texto ?? "";
+  return div.innerHTML;
+}
+
+carregarCardapio();
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota do Churrasco — Admin</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --carvao: #221510;
+    --brasa: #E8590C;
+    --brasa-escura: #B8430A;
+    --dourado: #F4B93F;
+    --papel: #FBF3E7;
+    --papel-escuro: #E8DCC8;
+    --texto-escuro: #2B1B12;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--texto-escuro);
+    font-family: "Work Sans", sans-serif;
+    min-height: 100vh;
+  }
+  h1, h2 { font-family: "Fraunces", serif; }
+
+  .topo {
+    background: var(--carvao);
+    color: var(--dourado);
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .topo a { color: var(--papel-escuro); text-decoration: none; font-size: 0.85rem; }
+
+  .conteudo { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .login-box {
+    max-width: 360px;
+    margin: 80px auto;
+    background: white;
+    border: 1px solid var(--papel-escuro);
+    border-radius: 8px;
+    padding: 28px;
+    text-align: center;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 14px 0;
+    border: 1px solid var(--papel-escuro);
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  button {
+    background: var(--brasa);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  button:hover { background: var(--brasa-escura); }
+  button.secundario { background: transparent; color: var(--brasa-escura); border: 1px solid var(--brasa-escura); }
+  button.perigo { background: #a33; }
+
+  .erro-msg { color: #a33; font-size: 0.85rem; margin-top: 6px; min-height: 1.2em; }
+
+  .card-prato {
+    background: white;
+    border: 1px solid var(--papel-escuro);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .card-prato .linha1 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .card-prato .nome { font-weight: 600; font-size: 1.05rem; }
+  .card-prato .preco { font-family: "Fraunces", serif; color: var(--brasa-escura); font-weight: 600; }
+  .card-prato .desc { color: #6b5a48; font-size: 0.88rem; margin-top: 4px; }
+  .card-prato .categoria-tag {
+    display: inline-block; font-size: 0.72rem; text-transform: none;
+    background: var(--papel-escuro); padding: 2px 8px; border-radius: 10px; margin-top: 6px;
+  }
+  .card-prato .acoes { margin-top: 10px; display: flex; gap: 8px; }
+
+  form.form-prato {
+    background: white;
+    border: 1px solid var(--papel-escuro);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  form.form-prato label { display: block; font-size: 0.85rem; font-weight: 600; margin-top: 12px; margin-bottom: 4px; }
+  form.form-prato input, form.form-prato textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--papel-escuro); border-radius: 6px; font-family: inherit; font-size: 0.95rem;
+  }
+  form.form-prato .duas-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  form.form-prato .botoes { margin-top: 16px; display: flex; gap: 8px; }
+
+  .status { font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <strong class="marca-fogo">Rota do Churrasco — Admin</strong>
+  <a href="index.html">← ver cardápio público</a>
+</div>
+
+<div class="conteudo">
+
+  <div id="tela-login" class="login-box">
+    <h2>Entrar</h2>
+    <input type="password" id="campo-senha" placeholder="Senha" autocomplete="current-password">
+    <button onclick="entrar()">Entrar</button>
+    <div class="erro-msg" id="erro-login"></div>
+  </div>
+
+  <div id="tela-admin" style="display:none">
+    <h1>Pratos do cardápio</h1>
+
+    <form class="form-prato" id="form-prato" onsubmit="salvarPrato(event)">
+      <input type="hidden" id="prato-id">
+      <label>Categoria</label>
+      <input type="text" id="prato-categoria" placeholder="Ex: Petiscos, Bebidas, Pratos Principais" required>
+
+      <label>Nome do prato</label>
+      <input type="text" id="prato-nome" required>
+
+      <label>Descrição (opcional)</label>
+      <textarea id="prato-descricao" rows="2"></textarea>
+
+      <div class="duas-colunas">
+        <div>
+          <label>Preço (R$)</label>
+          <input type="number" step="0.01" id="prato-preco" required>
+        </div>
+        <div>
+          <label>Ordem (menor aparece primeiro)</label>
+          <input type="number" id="prato-ordem" value="1">
+        </div>
+      </div>
+
+      <label>URL da foto (opcional)</label>
+      <input type="text" id="prato-imagem" placeholder="https://...">
+
+      <div class="botoes">
+        <button type="submit" id="botao-salvar">Adicionar prato</button>
+        <button type="button" class="secundario" id="botao-cancelar" style="display:none" onclick="cancelarEdicao()">Cancelar edição</button>
+      </div>
+      <div class="status" id="status-form"></div>
+    </form>
+
+    <div id="lista-pratos"></div>
+  </div>
+
+</div>
+
+<script src="config.js"></script>
+<script>
+let SENHA_ATUAL = sessionStorage.getItem("rc_senha") || "";
+
+function entrar() {
+  const senha = document.getElementById("campo-senha").value;
+  if (!senha) return;
+  SENHA_ATUAL = senha;
+  carregarPratos(true);
+}
+
+async function chamarApi(acao, dados) {
+  const resposta = await fetch("/api/admin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ senha: SENHA_ATUAL, acao, dados }),
+  });
+  const corpo = await resposta.json();
+  if (!resposta.ok) throw new Error(corpo.erro || `Erro ${resposta.status}`);
+  return corpo;
+}
+
+async function carregarPratos(vindoDoLogin) {
+  try {
+    const resultado = await chamarApi("listar", {});
+    sessionStorage.setItem("rc_senha", SENHA_ATUAL);
+    document.getElementById("tela-login").style.display = "none";
+    document.getElementById("tela-admin").style.display = "block";
+    renderizarLista(resultado.pratos);
+  } catch (erro) {
+    if (vindoDoLogin) {
+      document.getElementById("erro-login").textContent = "Senha incorreta ou erro de conexão.";
+    }
+    sessionStorage.removeItem("rc_senha");
+  }
+}
+
+function renderizarLista(pratos) {
+  const container = document.getElementById("lista-pratos");
+  if (!pratos.length) {
+    container.innerHTML = '<p style="color:#6b5a48">Nenhum prato cadastrado ainda.</p>';
+    return;
+  }
+  container.innerHTML = pratos.map(p => `
+    <div class="card-prato">
+      <div class="linha1">
+        <span class="nome">${escapeHtml(p.nome)}</span>
+        <span class="preco">R$ ${Number(p.preco).toFixed(2).replace(".", ",")}</span>
+      </div>
+      ${p.descricao ? `<div class="desc">${escapeHtml(p.descricao)}</div>` : ""}
+      <span class="categoria-tag">${escapeHtml(p.categoria)}${p.ativo ? "" : " · oculto"}</span>
+      <div class="acoes">
+        <button class="secundario" onclick='editarPrato(${JSON.stringify(p)})'>Editar</button>
+        <button class="secundario" onclick="alternarVisibilidade('${p.id}', ${!p.ativo})">${p.ativo ? "Ocultar" : "Mostrar"}</button>
+        <button class="perigo" onclick="excluirPrato('${p.id}', ${JSON.stringify(p.nome)})">Excluir</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function editarPrato(prato) {
+  document.getElementById("prato-id").value = prato.id;
+  document.getElementById("prato-categoria").value = prato.categoria;
+  document.getElementById("prato-nome").value = prato.nome;
+  document.getElementById("prato-descricao").value = prato.descricao || "";
+  document.getElementById("prato-preco").value = prato.preco;
+  document.getElementById("prato-ordem").value = prato.ordem ?? 1;
+  document.getElementById("prato-imagem").value = prato.imagem_url || "";
+  document.getElementById("botao-salvar").textContent = "Salvar alterações";
+  document.getElementById("botao-cancelar").style.display = "inline-block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function cancelarEdicao() {
+  document.getElementById("form-prato").reset();
+  document.getElementById("prato-id").value = "";
+  document.getElementById("botao-salvar").textContent = "Adicionar prato";
+  document.getElementById("botao-cancelar").style.display = "none";
+}
+
+async function salvarPrato(evento) {
+  evento.preventDefault();
+  const id = document.getElementById("prato-id").value;
+  const dados = {
+    categoria: document.getElementById("prato-categoria").value.trim(),
+    nome: document.getElementById("prato-nome").value.trim(),
+    descricao: document.getElementById("prato-descricao").value.trim(),
+    preco: parseFloat(document.getElementById("prato-preco").value),
+    ordem: parseInt(document.getElementById("prato-ordem").value || "1", 10),
+    imagem_url: document.getElementById("prato-imagem").value.trim(),
+  };
+  const status = document.getElementById("status-form");
+  status.textContent = "Salvando…";
+  try {
+    if (id) {
+      await chamarApi("atualizar", { id, ...dados });
+      status.textContent = "Prato atualizado.";
+    } else {
+      await chamarApi("criar", dados);
+      status.textContent = "Prato adicionado.";
+    }
+    cancelarEdicao();
+    carregarPratos(false);
+  } catch (erro) {
+    status.textContent = "Erro ao salvar: " + erro.message;
+  }
+}
+
+async function alternarVisibilidade(id, novoAtivo) {
+  await chamarApi("atualizar", { id, ativo: novoAtivo });
+  carregarPratos(false);
+}
+
+async function excluirPrato(id, nome) {
+  if (!confirm(`Excluir "${nome}" do cardápio? Essa ação não pode ser desfeita.`)) return;
+  await chamarApi("excluir", { id });
+  carregarPratos(false);
+}
+
+function escapeHtml(texto) {
+  const div = document.createElement("div");
+  div.textContent = texto ?? "";
+  return div.innerHTML;
+}
+
+if (SENHA_ATUAL) carregarPratos(false);
+</script>
+</body>
+</html>
