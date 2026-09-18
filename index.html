@@ -3,238 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rota do Churrasco — Cardápio</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍺</text></svg>">
+<title>Rota do Churrasco — Bar e Restaurante</title>
+<meta name="description" content="Cardápio do Rota do Churrasco, bar e restaurante no Guará, Brasília-DF.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ultra&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --carvao: #221510;
-    --carvao-claro: #33231a;
-    --brasa: #E8590C;
-    --brasa-escura: #B8430A;
-    --dourado: #F4B93F;
-    --papel: #FBF3E7;
-    --papel-escuro: #E8DCC8;
-    --texto-escuro: #2B1B12;
+  :root{
+    --char:#171310;
+    --panel:#241b15;
+    --panel-2:#2c2119;
+    --ember:#d33a2c;
+    --ember-dark:#a52a20;
+    --gold:#e8a33d;
+    --cream:#f4ecdf;
+    --stone:#b7a897;
+    --line:rgba(244,236,223,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--char);
+    color:var(--cream);
+    font-family:'Karla',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  h1,h2,h3{
+    font-family:'Ultra',serif;
+    font-weight:400;
+    margin:0;
+    letter-spacing:0.5px;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(23,19,16,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;
+  }
+  .brandmark{display:flex;align-items:center;gap:10px;}
+  .brandmark svg{width:26px;height:26px;flex-shrink:0;}
+  .brandmark span{font-family:'Ultra',serif;font-size:15px;color:var(--gold);}
+  .navlinks{display:flex;gap:22px;font-size:14px;color:var(--stone);}
+  .navlinks a:hover{color:var(--gold);}
+  @media(max-width:560px){.navlinks{gap:14px;font-size:13px;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:78vh;
+    display:flex;align-items:flex-end;
+    background:#000;
+    overflow:hidden;
+  }
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0.55;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(23,19,16,0.15) 0%, rgba(23,19,16,0.35) 45%, rgba(23,19,16,0.97) 92%);
+  }
+  .hero-content{
+    position:relative;z-index:2;padding:0 24px 56px;width:100%;
+    max-width:1080px;margin:0 auto;
+    opacity:0;transform:translateY(14px);
+    animation:riseIn 0.9s ease-out 0.15s forwards;
+  }
+  @keyframes riseIn{to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion: reduce){.hero-content{animation:none;opacity:1;transform:none;}}
+  .hero-eyebrow{color:var(--gold);font-size:14px;letter-spacing:0.3px;margin-bottom:10px;}
+  .hero h1{font-size:clamp(38px,7vw,74px);line-height:0.98;color:var(--cream);}
+  .hero h1 em{font-style:normal;color:var(--ember);}
+  .hero p.tag{
+    margin-top:16px;font-size:17px;color:var(--stone);max-width:480px;line-height:1.55;
+  }
+  .hero-cta{
+    display:inline-flex;margin-top:26px;gap:12px;
+  }
+  .btn{
+    display:inline-block;padding:11px 22px;border-radius:2px;
+    font-size:14px;font-weight:600;border:1px solid var(--line);
+    transition:border-color .2s, color .2s;
+  }
+  .btn.solid{background:var(--ember);border-color:var(--ember);color:#fff;}
+  .btn.solid:hover{background:var(--ember-dark);border-color:var(--ember-dark);}
+  .btn.ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- INTRO ---------- */
+  .intro{padding:64px 0 40px;}
+  .intro-grid{
+    display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center;
+  }
+  .intro h2{font-size:26px;color:var(--gold);margin-bottom:16px;}
+  .intro p{color:var(--stone);line-height:1.7;font-size:15.5px;}
+  .intro-photo{position:relative;}
+  .intro-photo img{border-radius:2px;filter:saturate(1.05);}
+  .intro-photo::after{
+    content:"";position:absolute;left:-14px;top:-14px;width:60px;height:60px;
+    border-left:2px solid var(--ember);border-top:2px solid var(--ember);
+  }
+  @media(max-width:760px){.intro-grid{grid-template-columns:1fr;}.intro-photo{order:-1;}}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:56px 0;}
+  .section + .section{border-top:1px solid var(--line);}
+  .section-head{
+    display:flex;align-items:baseline;gap:16px;margin-bottom:6px;
+  }
+  .section-head h2{font-size:34px;color:var(--cream);}
+  .section-head .flame-rule{flex:1;height:1px;background:var(--line);position:relative;}
+  .section-sub{color:var(--stone);font-size:14.5px;margin-bottom:36px;}
+
+  /* ---------- CATEGORY TABS ---------- */
+  .tabs{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+  .tab{
+    padding:9px 18px;border:1px solid var(--line);border-radius:999px;
+    font-size:13.5px;color:var(--stone);cursor:pointer;background:transparent;
+    font-family:'Karla',sans-serif;transition:all .2s;
+  }
+  .tab.active{background:var(--gold);border-color:var(--gold);color:var(--char);font-weight:700;}
+  .tab:hover:not(.active){border-color:var(--gold);color:var(--gold);}
+
+  /* ---------- MENU LIST ---------- */
+  .menu-group{display:none;}
+  .menu-group.active{display:block;}
+  .menu-item{
+    display:grid;grid-template-columns:96px 1fr auto;gap:20px;align-items:start;
+    padding:22px 0;border-bottom:1px dashed var(--line);
+  }
+  .menu-item:first-of-type{padding-top:32px;}
+  .menu-item img{width:96px;height:96px;object-fit:cover;border-radius:3px;}
+  .item-name{font-size:18px;color:var(--cream);font-weight:700;margin-bottom:5px;}
+  .item-desc{font-size:14px;color:var(--stone);line-height:1.55;max-width:460px;}
+  .item-price{
+    font-family:'Ultra',serif;font-size:17px;color:var(--gold);white-space:nowrap;
+    padding-top:2px;
+  }
+  .item-price small{display:block;font-family:'Karla',sans-serif;font-size:10px;color:var(--stone);font-weight:400;letter-spacing:.3px;text-transform:uppercase;margin-top:3px;}
+  @media(max-width:560px){
+    .menu-item{grid-template-columns:64px 1fr;grid-template-rows:auto auto;}
+    .menu-item img{width:64px;height:64px;}
+    .item-price{grid-column:2;font-size:15px;}
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--carvao);
-    color: var(--papel);
-    font-family: "Work Sans", sans-serif;
-    line-height: 1.5;
+  .subhead{
+    font-size:13px;letter-spacing:.4px;color:var(--ember);margin:36px 0 4px;
+    font-weight:700;
   }
+  .subhead:first-child{margin-top:0;}
 
-  .marca-fogo {
-    font-family: "Fraunces", serif;
-    font-optical-sizing: auto;
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;
+    scrollbar-width:thin;
   }
-
-  /* -------- HERO -------- */
-  .hero {
-    position: relative;
-    padding: 64px 24px 56px;
-    text-align: center;
-    overflow: hidden;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--carvao-claro), var(--carvao) 70%);
+  .gallery img{
+    height:230px;width:auto;border-radius:2px;flex-shrink:0;
+    scroll-snap-align:start;
   }
+  .gallery{scroll-snap-type:x mandatory;}
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(115deg, transparent 0 38px, rgba(232,89,12,0.06) 38px 40px);
-    pointer-events: none;
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--panel);border-top:1px solid var(--line);padding:48px 0 32px;
   }
-
-  .hero-emoji { font-size: 2.6rem; margin-bottom: 4px; }
-
-  .hero h1 {
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 700;
-    color: var(--dourado);
-    letter-spacing: -0.01em;
-    position: relative;
+  .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;}
+  .foot-brand{display:flex;align-items:center;gap:10px;}
+  .foot-brand svg{width:30px;height:30px;}
+  .foot-brand span{font-family:'Ultra',serif;color:var(--gold);font-size:16px;}
+  .foot-col p, .foot-col a{display:block;color:var(--stone);font-size:14px;margin-top:8px;}
+  .foot-col a:hover{color:var(--gold);}
+  .foot-label{color:var(--cream);font-size:13px;font-weight:700;letter-spacing:.3px;margin-bottom:4px;}
+  .foot-bottom{
+    margin-top:36px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--stone);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
   }
-
-  .hero p.tagline {
-    margin-top: 10px;
-    font-size: 1.05rem;
-    color: var(--papel-escuro);
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-info {
-    margin-top: 28px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    font-size: 0.9rem;
-    color: var(--papel-escuro);
-  }
-
-  .hero-info a { color: var(--dourado); text-decoration: none; }
-  .hero-info a:hover { text-decoration: underline; }
-
-  /* -------- DIVISOR DE FUMACA -------- */
-  .divisor {
-    height: 26px;
-    background: var(--papel);
-  }
-  .divisor svg { display: block; width: 100%; height: 26px; }
-
-  /* -------- CARDAPIO -------- */
-  .cardapio {
-    background: var(--papel);
-    color: var(--texto-escuro);
-    padding: 12px 20px 80px;
-  }
-
-  .categoria {
-    max-width: 620px;
-    margin: 0 auto;
-    padding-top: 44px;
-  }
-
-  .categoria h2 {
-    font-family: "Fraunces", serif;
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: var(--brasa-escura);
-    border-bottom: 2px solid var(--papel-escuro);
-    padding-bottom: 10px;
-    margin-bottom: 18px;
-  }
-
-  .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px dashed var(--papel-escuro);
-  }
-  .item:last-child { border-bottom: none; }
-
-  .item-nome-desc { flex: 1; min-width: 0; }
-
-  .item-nome {
-    font-weight: 600;
-    font-size: 1.05rem;
-  }
-
-  .item-desc {
-    font-size: 0.88rem;
-    color: #6b5a48;
-    margin-top: 2px;
-  }
-
-  .item-preco {
-    font-family: "Fraunces", serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--brasa-escura);
-    white-space: nowrap;
-  }
-
-  .vazio, .erro {
-    text-align: center;
-    color: #6b5a48;
-    padding: 40px 0;
-    font-size: 0.95rem;
-  }
-
-  footer {
-    background: var(--carvao);
-    color: var(--papel-escuro);
-    text-align: center;
-    padding: 28px 20px;
-    font-size: 0.82rem;
-  }
-  footer a { color: var(--dourado); text-decoration: none; }
+  .admin-link{color:var(--stone);opacity:.6;}
+  .admin-link:hover{color:var(--gold);opacity:1;}
 </style>
 </head>
 <body>
 
+<nav class="nav">
+  <div class="wrap">
+    <div class="brandmark">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4c-1 6-6 8-6 14a6 6 0 0012 0c0-3-1.5-4-1.5-6.5 2 1.5 3.5 4.5 3.5 8a8 8 0 11-16 0C12 12 18 10 20 4z" fill="var(--ember)"/>
+        <path d="M13 30l2-2 2 2-2 2z" fill="var(--gold)"/>
+        <path d="M23 30l2-2 2 2-2 2z" fill="var(--gold)"/>
+      </svg>
+      <span>ROTA DO CHURRASCO</span>
+    </div>
+    <div class="navlinks">
+      <a href="#cardapio">Cardápio</a>
+      <a href="#ambiente">Ambiente</a>
+      <a href="https://instagram.com/rota_dochurrasco" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</nav>
+
 <header class="hero">
-  <div class="hero-emoji">🍺</div>
-  <h1 class="marca-fogo">Rota do Churrasco</h1>
-  <p class="tagline">O sabor que reúne a galera. Petiscos na brasa, chope gelado e boa música pra fechar o dia.</p>
-  <div class="hero-info">
-    <span>📍 Guará, Brasília-DF</span>
-    <a href="https://www.instagram.com/rota_dochurrasco/" target="_blank" rel="noopener">📲 @rota_dochurrasco</a>
+  <img src="img/fachada.jpg" alt="Fachada do Rota do Churrasco">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bar e Restaurante · Guará, Brasília-DF</div>
+    <h1>Rota do<br><em>Churrasco</em></h1>
+    <p class="tag">Carnes na chapa, petiscos, chopp gelado e drinks — no ponto certo, todos os dias.</p>
+    <div class="hero-cta">
+      <a href="#cardapio" class="btn solid">Ver cardápio</a>
+      <a href="https://instagram.com/rota_dochurrasco" target="_blank" rel="noopener" class="btn ghost">@rota_dochurrasco</a>
+    </div>
   </div>
 </header>
 
-<div class="divisor">
-  <svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M0 20 L0 10 Q 12.5 0 25 10 T 50 10 T 75 10 T 100 10 T 125 10 T 150 10 T 175 10 T 200 10 L200 20 Z" fill="#221510"/></svg>
-</div>
+<section class="intro">
+  <div class="wrap intro-grid">
+    <div>
+      <h2>Chapa quente, mesa cheia</h2>
+      <p>Um cantinho no Guará pra comer bem e ficar até mais tarde: carnes na chapa, petiscos pra dividir e uma carta de drinks e sucos naturais feitos na hora. Tem música em vivo em alguns dias — chega, escolhe uma mesa e peça o chopp.</p>
+    </div>
+    <div class="intro-photo">
+      <img src="img/garcom.jpg" alt="Garçom servindo no Rota do Churrasco">
+    </div>
+  </div>
+</section>
 
-<main class="cardapio" id="cardapio">
-  <div class="vazio">Carregando cardápio…</div>
-</main>
+<section class="section" id="cardapio">
+  <div class="wrap">
+    <div class="section-head"><h2>Cardápio</h2><div class="flame-rule"></div></div>
+    <p class="section-sub">Preços ainda a confirmar — atualize pelo painel administrativo antes de publicar.</p>
+
+    <div class="tabs">
+      <button class="tab active" data-target="pratos">Pratos &amp; Petiscos</button>
+      <button class="tab" data-target="bebidas">Bebidas</button>
+    </div>
+
+    <div class="menu-group active" id="pratos">
+      <div class="menu-item">
+        <img src="img/picanha-chapa.jpg" alt="Picanha na chapa">
+        <div>
+          <div class="item-name">Picanha na Chapa</div>
+          <div class="item-desc">Picanha grelhada, servida na chapa com arroz, farofa, batata frita e vinagrete.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/tabua-carnes.jpg" alt="Tábua mista na chapa">
+        <div>
+          <div class="item-name">Tábua Mista na Chapa</div>
+          <div class="item-desc">Carne e linguiça grelhadas com batata e pimenta, acompanhadas de fritas.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/frango-grelhado.jpg" alt="Frango grelhado com fritas">
+        <div>
+          <div class="item-name">Frango Grelhado</div>
+          <div class="item-desc">Filé de frango grelhado com cebola, arroz, batata frita e salada.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/parmegiana.jpg" alt="Frango à parmegiana">
+        <div>
+          <div class="item-name">Frango à Parmegiana</div>
+          <div class="item-desc">Filé empanado coberto de mussarela e sugo, com arroz à grega e batata frita.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/prato-fit.jpg" alt="Prato fit com frango xadrez e legumes">
+        <div>
+          <div class="item-name">Frango Xadrez com Legumes</div>
+          <div class="item-desc">Frango ao molho com legumes no vapor e arroz temperado. Opção mais leve.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+    </div>
+
+    <div class="menu-group" id="bebidas">
+      <div class="subhead">DRINKS</div>
+      <div class="menu-item">
+        <img src="img/caipirinha.jpg" alt="Caipirinha">
+        <div>
+          <div class="item-name">Caipirinha</div>
+          <div class="item-desc">Cachaça, limão e açúcar na medida certa.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/caipiroska-dupla.jpg" alt="Caipiroska dupla">
+        <div>
+          <div class="item-name">Caipiroska (dose dupla)</div>
+          <div class="item-desc">Vodka, limão e açúcar — servida bem gelada, em dose dupla.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/drink-frutas.jpg" alt="Drink com frutas frescas">
+        <div>
+          <div class="item-name">Drink de Frutas</div>
+          <div class="item-desc">Drink refrescante com laranja, morango e hortelã.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+
+      <div class="subhead">SUCOS &amp; CERVEJA</div>
+      <div class="menu-item">
+        <img src="img/sucos-naturais.jpg" alt="Sucos naturais">
+        <div>
+          <div class="item-name">Sucos Naturais</div>
+          <div class="item-desc">Maracujá, laranja ou limão, feitos na hora.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+      <div class="menu-item">
+        <img src="img/garcom.jpg" alt="Chopp e cerveja gelada">
+        <div>
+          <div class="item-name">Chopp &amp; Cerveja Gelada</div>
+          <div class="item-desc">Heineken, Amstel e Original geladinhas, ou no chopp.</div>
+        </div>
+        <div class="item-price">R$ 00,00<small>editar</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ambiente">
+  <div class="wrap">
+    <div class="section-head"><h2>Ambiente</h2><div class="flame-rule"></div></div>
+    <p class="section-sub">Mesas ao ar livre, música em vivo em alguns dias e a chapa sempre quente.</p>
+    <div class="gallery">
+      <img src="img/mesa-completa.jpg" alt="Mesa cheia no Rota do Churrasco">
+      <img src="img/logo-noite.jpg" alt="Fachada iluminada à noite">
+      <img src="img/logo-dia.jpg" alt="Placa Rota do Churrasco de dia">
+      <img src="img/garcom.jpg" alt="Garçom servindo bebidas">
+    </div>
+  </div>
+</section>
 
 <footer>
-  Cardápio digital — <a href="admin.html">área administrativa</a>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 4c-1 6-6 8-6 14a6 6 0 0012 0c0-3-1.5-4-1.5-6.5 2 1.5 3.5 4.5 3.5 8a8 8 0 11-16 0C12 12 18 10 20 4z" fill="var(--ember)"/>
+        </svg>
+        <span>ROTA DO CHURRASCO</span>
+      </div>
+      <div class="foot-col">
+        <div class="foot-label">Onde estamos</div>
+        <p>Guará, Brasília-DF</p>
+      </div>
+      <div class="foot-col">
+        <div class="foot-label">Contato</div>
+        <a href="https://instagram.com/rota_dochurrasco" target="_blank" rel="noopener">@rota_dochurrasco</a>
+        <a href="tel:+5561997597684">(61) 99759-7684</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-label">Peça também</div>
+        <a href="#">iFood</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Rota do Churrasco</span>
+      <a class="admin-link" href="admin.html">área administrativa</a>
+    </div>
+  </div>
 </footer>
 
-<script src="config.js"></script>
 <script>
-async function carregarCardapio() {
-  const container = document.getElementById("cardapio");
-  try {
-    const resposta = await fetch(
-      `${SUPABASE_URL}/rest/v1/pratos?select=*&ativo=eq.true&order=categoria.asc,ordem.asc`,
-      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-    );
-    if (!resposta.ok) throw new Error(`Erro ${resposta.status}`);
-    const pratos = await resposta.json();
-
-    if (!pratos.length) {
-      container.innerHTML = '<div class="vazio">Cardápio em preparação — volte em breve!</div>';
-      return;
-    }
-
-    const categorias = {};
-    for (const prato of pratos) {
-      (categorias[prato.categoria] ||= []).push(prato);
-    }
-
-    container.innerHTML = Object.entries(categorias).map(([categoria, itens]) => `
-      <section class="categoria">
-        <h2 class="marca-fogo">${escapeHtml(categoria)}</h2>
-        ${itens.map(item => `
-          <div class="item">
-            <div class="item-nome-desc">
-              <div class="item-nome">${escapeHtml(item.nome)}</div>
-              ${item.descricao ? `<div class="item-desc">${escapeHtml(item.descricao)}</div>` : ""}
-            </div>
-            <div class="item-preco">R$ ${Number(item.preco).toFixed(2).replace(".", ",")}</div>
-          </div>
-        `).join("")}
-      </section>
-    `).join("");
-  } catch (erro) {
-    console.error(erro);
-    container.innerHTML = '<div class="erro">Não consegui carregar o cardápio agora. Verifique a configuração do Supabase em config.js.</div>';
-  }
-}
-
-function escapeHtml(texto) {
-  const div = document.createElement("div");
-  div.textContent = texto ?? "";
-  return div.innerHTML;
-}
-
-carregarCardapio();
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+      document.querySelectorAll('.menu-group').forEach(function(g){g.classList.remove('active');});
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.target).classList.add('active');
+    });
+  });
 </script>
+
 </body>
 </html>
