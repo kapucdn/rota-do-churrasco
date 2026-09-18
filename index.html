@@ -147,14 +147,47 @@
   .item-desc{font-size:14px;color:var(--stone);line-height:1.55;max-width:460px;}
   .item-price{
     font-family:'Ultra',serif;font-size:17px;color:var(--gold);white-space:nowrap;
-    padding-top:2px;
+    padding-top:2px;text-align:right;
   }
-  .item-price small{display:block;font-family:'Karla',sans-serif;font-size:10px;color:var(--stone);font-weight:400;letter-spacing:.3px;text-transform:uppercase;margin-top:3px;}
+  .item-details-link{
+    display:block;margin-top:6px;font-family:'Karla',sans-serif;font-size:11.5px;
+    color:var(--stone);background:none;border:none;padding:0;cursor:pointer;
+    text-decoration:underline;text-decoration-color:var(--line);
+  }
+  .item-details-link:hover{color:var(--gold);text-decoration-color:var(--gold);}
+  .menu-item img{cursor:pointer;transition:opacity .15s;}
+  .menu-item img:hover{opacity:.85;}
   @media(max-width:560px){
     .menu-item{grid-template-columns:64px 1fr;grid-template-rows:auto auto;}
     .menu-item img{width:64px;height:64px;}
-    .item-price{grid-column:2;font-size:15px;}
+    .item-price{grid-column:2;font-size:15px;text-align:left;}
   }
+
+  /* ---------- MODAL DE DETALHES ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(10,8,6,0.82);
+    display:none;align-items:center;justify-content:center;
+    z-index:200;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--panel);border:1px solid var(--line);border-radius:3px;
+    max-width:480px;width:100%;max-height:90vh;overflow-y:auto;
+    position:relative;
+    animation:modalIn .2s ease-out;
+  }
+  @keyframes modalIn{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:scale(1);}}
+  .modal-box img{width:100%;height:280px;object-fit:cover;}
+  .modal-close{
+    position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;
+    background:rgba(23,19,16,0.75);border:1px solid var(--line);color:var(--cream);
+    font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close:hover{color:var(--gold);border-color:var(--gold);}
+  .modal-body{padding:24px 26px 28px;}
+  .modal-name{font-family:'Ultra',serif;font-size:24px;color:var(--cream);margin-bottom:12px;}
+  .modal-desc{font-size:16px;line-height:1.65;color:var(--stone);margin-bottom:18px;}
+  .modal-price{font-family:'Ultra',serif;font-size:22px;color:var(--gold);}
 
   .subhead{
     font-size:13px;letter-spacing:.4px;color:var(--ember);margin:36px 0 4px;
@@ -240,101 +273,10 @@
 <section class="section" id="cardapio">
   <div class="wrap">
     <div class="section-head"><h2>Cardápio</h2><div class="flame-rule"></div></div>
-    <p class="section-sub">Preços ainda a confirmar — atualize pelo painel administrativo antes de publicar.</p>
+    <p class="section-sub" id="cardapio-status">Carregando cardápio…</p>
 
-    <div class="tabs">
-      <button class="tab active" data-target="pratos">Pratos &amp; Petiscos</button>
-      <button class="tab" data-target="bebidas">Bebidas</button>
-    </div>
-
-    <div class="menu-group active" id="pratos">
-      <div class="menu-item">
-        <img src="img/picanha-chapa.jpg" alt="Picanha na chapa">
-        <div>
-          <div class="item-name">Picanha na Chapa</div>
-          <div class="item-desc">Picanha grelhada, servida na chapa com arroz, farofa, batata frita e vinagrete.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/tabua-carnes.jpg" alt="Tábua mista na chapa">
-        <div>
-          <div class="item-name">Tábua Mista na Chapa</div>
-          <div class="item-desc">Carne e linguiça grelhadas com batata e pimenta, acompanhadas de fritas.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/frango-grelhado.jpg" alt="Frango grelhado com fritas">
-        <div>
-          <div class="item-name">Frango Grelhado</div>
-          <div class="item-desc">Filé de frango grelhado com cebola, arroz, batata frita e salada.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/parmegiana.jpg" alt="Frango à parmegiana">
-        <div>
-          <div class="item-name">Frango à Parmegiana</div>
-          <div class="item-desc">Filé empanado coberto de mussarela e sugo, com arroz à grega e batata frita.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/prato-fit.jpg" alt="Prato fit com frango xadrez e legumes">
-        <div>
-          <div class="item-name">Frango Xadrez com Legumes</div>
-          <div class="item-desc">Frango ao molho com legumes no vapor e arroz temperado. Opção mais leve.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-    </div>
-
-    <div class="menu-group" id="bebidas">
-      <div class="subhead">DRINKS</div>
-      <div class="menu-item">
-        <img src="img/caipirinha.jpg" alt="Caipirinha">
-        <div>
-          <div class="item-name">Caipirinha</div>
-          <div class="item-desc">Cachaça, limão e açúcar na medida certa.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/caipiroska-dupla.jpg" alt="Caipiroska dupla">
-        <div>
-          <div class="item-name">Caipiroska (dose dupla)</div>
-          <div class="item-desc">Vodka, limão e açúcar — servida bem gelada, em dose dupla.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/drink-frutas.jpg" alt="Drink com frutas frescas">
-        <div>
-          <div class="item-name">Drink de Frutas</div>
-          <div class="item-desc">Drink refrescante com laranja, morango e hortelã.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-
-      <div class="subhead">SUCOS &amp; CERVEJA</div>
-      <div class="menu-item">
-        <img src="img/sucos-naturais.jpg" alt="Sucos naturais">
-        <div>
-          <div class="item-name">Sucos Naturais</div>
-          <div class="item-desc">Maracujá, laranja ou limão, feitos na hora.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-      <div class="menu-item">
-        <img src="img/garcom.jpg" alt="Chopp e cerveja gelada">
-        <div>
-          <div class="item-name">Chopp &amp; Cerveja Gelada</div>
-          <div class="item-desc">Heineken, Amstel e Original geladinhas, ou no chopp.</div>
-        </div>
-        <div class="item-price">R$ 00,00<small>editar</small></div>
-      </div>
-    </div>
+    <div class="tabs" id="tabs-container"></div>
+    <div id="menu-container"></div>
   </div>
 </section>
 
@@ -381,15 +323,143 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close" aria-label="Fechar">&times;</button>
+    <img id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-price" id="modal-price"></div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
 <script>
-  document.querySelectorAll('.tab').forEach(function(tab){
-    tab.addEventListener('click', function(){
-      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-      document.querySelectorAll('.menu-group').forEach(function(g){g.classList.remove('active');});
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.target).classList.add('active');
+  // ---------- CARDÁPIO DINÂMICO (busca direto do Supabase) ----------
+  var IMG_PADRAO = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%232c2119'/%3E%3Ctext x='50' y='58' font-size='34' text-anchor='middle' fill='%23e8a33d'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E";
+
+  function formatarPreco(valor){
+    return "R$ " + Number(valor).toFixed(2).replace(".", ",");
+  }
+
+  function escapeHtml(texto){
+    var div = document.createElement('div');
+    div.textContent = texto == null ? '' : texto;
+    return div.innerHTML;
+  }
+
+  function montarItemHtml(p){
+    var img = p.imagem_url && p.imagem_url.trim() ? p.imagem_url.trim() : IMG_PADRAO;
+    return (
+      '<div class="menu-item" data-nome="' + escapeHtml(p.nome) + '" data-desc="' + escapeHtml(p.descricao || '') + '" data-preco="' + formatarPreco(p.preco) + '" data-img="' + escapeHtml(img) + '">' +
+        '<img src="' + escapeHtml(img) + '" alt="' + escapeHtml(p.nome) + '">' +
+        '<div>' +
+          '<div class="item-name">' + escapeHtml(p.nome) + '</div>' +
+          (p.descricao ? '<div class="item-desc">' + escapeHtml(p.descricao) + '</div>' : '') +
+        '</div>' +
+        '<div class="item-price">' + formatarPreco(p.preco) + '<button class="item-details-link" type="button">Detalhes</button></div>' +
+      '</div>'
+    );
+  }
+
+  async function carregarCardapio(){
+    var statusEl = document.getElementById('cardapio-status');
+    try {
+      var resposta = await fetch(SUPABASE_URL + "/rest/v1/pratos?select=*&order=categoria.asc,ordem.asc", {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: "Bearer " + SUPABASE_ANON_KEY,
+        }
+      });
+      if (!resposta.ok) throw new Error("Erro " + resposta.status);
+      var pratos = await resposta.json();
+
+      if (!pratos.length){
+        statusEl.textContent = "Nenhum prato cadastrado ainda.";
+        return;
+      }
+      statusEl.style.display = "none";
+
+      // agrupa por categoria, mantendo a ordem em que aparecem
+      var categorias = [];
+      var porCategoria = {};
+      pratos.forEach(function(p){
+        if (!porCategoria[p.categoria]) {
+          porCategoria[p.categoria] = [];
+          categorias.push(p.categoria);
+        }
+        porCategoria[p.categoria].push(p);
+      });
+
+      var tabsHtml = categorias.map(function(cat, i){
+        var slug = "cat-" + i;
+        return '<button class="tab' + (i === 0 ? ' active' : '') + '" data-target="' + slug + '">' + escapeHtml(cat) + '</button>';
+      }).join('');
+      document.getElementById('tabs-container').innerHTML = tabsHtml;
+
+      var groupsHtml = categorias.map(function(cat, i){
+        var slug = "cat-" + i;
+        var itensHtml = porCategoria[cat].map(montarItemHtml).join('');
+        return '<div class="menu-group' + (i === 0 ? ' active' : '') + '" id="' + slug + '">' + itensHtml + '</div>';
+      }).join('');
+      document.getElementById('menu-container').innerHTML = groupsHtml;
+
+      ativarTabs();
+      ativarModais();
+    } catch (erro) {
+      statusEl.textContent = "Não foi possível carregar o cardápio agora. Tenta recarregar a página.";
+    }
+  }
+
+  function ativarTabs(){
+    document.querySelectorAll('.tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+        document.querySelectorAll('.menu-group').forEach(function(g){g.classList.remove('active');});
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+      });
     });
+  }
+
+  // ---------- MODAL DE DETALHES ----------
+  var overlay = document.getElementById('modal-overlay');
+  var modalImg = document.getElementById('modal-img');
+  var modalName = document.getElementById('modal-name');
+  var modalDesc = document.getElementById('modal-desc');
+  var modalPrice = document.getElementById('modal-price');
+
+  function abrirModal(item){
+    modalImg.src = item.dataset.img || '';
+    modalImg.alt = item.dataset.nome || '';
+    modalName.textContent = item.dataset.nome || '';
+    modalDesc.textContent = item.dataset.desc || '';
+    modalPrice.textContent = item.dataset.preco || '';
+    overlay.classList.add('open');
+  }
+
+  function ativarModais(){
+    document.querySelectorAll('.menu-item').forEach(function(item){
+      var img = item.querySelector('img');
+      var btn = item.querySelector('.item-details-link');
+      if (img) img.addEventListener('click', function(){ abrirModal(item); });
+      if (btn) btn.addEventListener('click', function(){ abrirModal(item); });
+    });
+  }
+
+  document.getElementById('modal-close').addEventListener('click', function(){
+    overlay.classList.remove('open');
   });
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') overlay.classList.remove('open');
+  });
+
+  carregarCardapio();
 </script>
 
 </body>
