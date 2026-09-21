@@ -107,6 +107,16 @@
   form.form-prato .botoes { margin-top: 16px; display: flex; gap: 8px; }
 
   .status { font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+
+  .preview-foto {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    border: 1px solid var(--papel-escuro);
+    margin-top: 8px;
+  }
 </style>
 </head>
 <body>
@@ -153,7 +163,7 @@
       <label>Foto do prato</label>
       <input type="file" id="prato-imagem-arquivo" accept="image/*" onchange="enviarFoto()">
       <div class="status" id="status-foto"></div>
-      <img id="preview-imagem" style="display:none;max-width:160px;border-radius:6px;margin-top:8px;">
+      <img id="preview-imagem" class="preview-foto" style="display:none;">
       <input type="hidden" id="prato-imagem">
 
       <div class="botoes">
