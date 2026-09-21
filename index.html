@@ -206,6 +206,18 @@
   }
   .gallery{scroll-snap-type:x mandatory;}
 
+  /* ---------- BANNER IFOOD ---------- */
+  .ifood-banner{
+    display:block;border-radius:6px;overflow:hidden;
+    border:1px solid var(--line);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .ifood-banner:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.35);
+  }
+  .ifood-banner img{width:100%;height:auto;}
+
   /* ---------- FOOTER ---------- */
   footer{
     background:var(--panel);border-top:1px solid var(--line);padding:48px 0 32px;
@@ -280,6 +292,14 @@
   </div>
 </section>
 
+<section class="section" id="ifood">
+  <div class="wrap">
+    <a class="ifood-banner" href="https://www.ifood.com.br/delivery/brasilia-df/rota-do-churrasco---carnes-e-executivos-guara-i/330e3a2c-c383-4f7f-a280-fbc1182a8848" target="_blank" rel="noopener">
+      <img src="img/ifood-banner.jpg" alt="Peça o Rota do Churrasco pelo iFood">
+    </a>
+  </div>
+</section>
+
 <section class="section" id="ambiente">
   <div class="wrap">
     <div class="section-head"><h2>Ambiente</h2><div class="flame-rule"></div></div>
@@ -313,7 +333,7 @@
       </div>
       <div class="foot-col">
         <div class="foot-label">Peça também</div>
-        <a href="#">iFood</a>
+        <a href="https://www.ifood.com.br/delivery/brasilia-df/rota-do-churrasco---carnes-e-executivos-guara-i/330e3a2c-c383-4f7f-a280-fbc1182a8848" target="_blank" rel="noopener">iFood</a>
       </div>
     </div>
     <div class="foot-bottom">
