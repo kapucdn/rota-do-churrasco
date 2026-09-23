@@ -215,7 +215,10 @@ async function carregarPratos(vindoDoLogin) {
   }
 }
 
+let PRATOS_ATUAIS = [];
+
 function renderizarLista(pratos) {
+  PRATOS_ATUAIS = pratos;
   const container = document.getElementById("lista-pratos");
   if (!pratos.length) {
     container.innerHTML = '<p style="color:#6b5a48">Nenhum prato cadastrado ainda.</p>';
@@ -230,12 +233,22 @@ function renderizarLista(pratos) {
       ${p.descricao ? `<div class="desc">${escapeHtml(p.descricao)}</div>` : ""}
       <span class="categoria-tag">${escapeHtml(p.categoria)}${p.ativo ? "" : " · oculto"}</span>
       <div class="acoes">
-        <button class="secundario" onclick='editarPrato(${JSON.stringify(p)})'>Editar</button>
+        <button class="secundario" onclick="editarPratoPorId('${p.id}')">Editar</button>
         <button class="secundario" onclick="alternarVisibilidade('${p.id}', ${!p.ativo})">${p.ativo ? "Ocultar" : "Mostrar"}</button>
-        <button class="perigo" onclick="excluirPrato('${p.id}', ${JSON.stringify(p.nome)})">Excluir</button>
+        <button class="perigo" onclick="excluirPratoPorId('${p.id}')">Excluir</button>
       </div>
     </div>
   `).join("");
+}
+
+function editarPratoPorId(id) {
+  const prato = PRATOS_ATUAIS.find(p => String(p.id) === String(id));
+  if (prato) editarPrato(prato);
+}
+
+function excluirPratoPorId(id) {
+  const prato = PRATOS_ATUAIS.find(p => String(p.id) === String(id));
+  if (prato) excluirPrato(prato.id, prato.nome);
 }
 
 function editarPrato(prato) {
