@@ -1,0 +1,14 @@
+127.0.0.1 - - [25/Sep/2026 03:03:03] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:03:03] "GET /config.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:03:08] "GET /admin.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:03:29] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:03:29] "GET /config.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:03:33] "GET /admin.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:04:28] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:04:28] "GET /config.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:04:32] "GET /admin.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:04:33] code 501, message Unsupported method ('POST')
+127.0.0.1 - - [25/Sep/2026 03:04:33] "POST /api/admin HTTP/1.1" 501 -
+127.0.0.1 - - [25/Sep/2026 03:05:42] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:05:42] "GET /config.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Sep/2026 03:05:45] "GET /admin.html HTTP/1.1" 200 -
