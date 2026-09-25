@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rota do Churrasco — Visitas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --carvao: #221510;
+    --brasa: #E8590C;
+    --dourado: #F4B93F;
+    --papel: #FBF3E7;
+    --papel-escuro: #E8DCC8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--carvao);
+    color: var(--papel);
+    font-family: "Work Sans", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .caixa { text-align: center; padding: 40px; }
+  h1 {
+    font-family: "Fraunces", serif; color: var(--dourado);
+    font-size: 1.1rem; margin-bottom: 10px;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .numero { font-family: "Fraunces", serif; font-size: 5rem; font-weight: 700; color: var(--brasa); margin: 10px 0; }
+  .sub { color: var(--papel-escuro); font-size: .9rem; }
+  a.voltar {
+    display: inline-block; margin-top: 24px; color: var(--papel-escuro);
+    text-decoration: none; font-size: .85rem; border-bottom: 1px solid transparent;
+  }
+  a.voltar:hover { border-color: var(--papel-escuro); }
+</style>
+</head>
+<body>
+  <div class="caixa">
+    <h1>Total de visitas ao cardápio</h1>
+    <div class="numero" id="total">—</div>
+    <div class="sub" id="status">carregando...</div>
+    <a class="voltar" href="index.html">← voltar pro cardápio</a>
+  </div>
+
+<script>
+  async function carregarTotal(){
+    var elTotal = document.getElementById('total');
+    var elStatus = document.getElementById('status');
+    try {
+      var resposta = await fetch("/api/visitas");
+      if (!resposta.ok) throw new Error("Erro " + resposta.status);
+      var dados = await resposta.json();
+      elTotal.textContent = dados.total;
+      elStatus.textContent = "atualizado agora";
+    } catch (e) {
+      elStatus.textContent = "não foi possível carregar";
+    }
+  }
+  carregarTotal();
+</script>
+</body>
+</html>
